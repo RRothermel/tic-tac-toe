@@ -18,7 +18,7 @@ global gameState
 def main():
   # main game logic
 
-  print("hello, game is started...")
+  print("hello, 2 player game is started...")
 
   # local constants
 
