@@ -6,6 +6,7 @@
 
 import gameFunctions
 import ioFunctions
+import random
 
 ##### global constants
 
@@ -18,20 +19,20 @@ global gameState
 def main():
   # main game logic
 
-  print("hello, single player game is started...")
+  print("hello, game is started...")
 
   # local constants
 
   # general constants
-  SENTINEL = -1
+  SENTINEL = -2
 
   # local variables
 
   # game variables
   gameInPlay = True
-  prompt = "Enter a value between 0 and 8 (" + str(SENTINEL) + " to quit): "
+  prompt = "Enter a value between 1 and 9 (" + str(SENTINEL + 1) + " to quit): "
   
-  debug = True
+  debug = False
   
   gameState = [
     0, 0, 0, 
@@ -45,33 +46,52 @@ def main():
       print("debugging...")
       gameFunctions.gameStateUI(gameState)
 
-    ioFunctions.boardDisplay(gameState)
+    gameFunctions.print2DBoard(gameState)
+    #ioFunctions.boardDisplay(gameState)
     numTurns += 1
-    userInput = ioFunctions.getIntegerInput(prompt)
+    
     # user wants to exit     
-    if userInput == SENTINEL:
-      break
-    elif not (userInput > -1 and userInput < 9):
-      print("invalid input " + str(userInput))
-    elif not gameState[userInput] == 0:
-      print("invalid input " + str(userInput) + ". That space is already taken")
-    else:
-      if numTurns % 2 == 1:
+    
+    
+    
+    
+    if numTurns % 2 == 1:
+      userInput = (ioFunctions.getIntegerInput(prompt) - 1)
+      if userInput == SENTINEL:
+        break
+      elif not (userInput > -1 and userInput < 9):
+        print("invalid input " + str(userInput))
+      elif not gameState[userInput] == 0:
+        print("invalid input " + str(userInput) + ". That space is already taken")
+      else:
         gameState[userInput] = 1
         print("processing move by player O")
-      else:
-        gameState[userInput] = -1
-        print("processing move by player X")
+        currentPlayer = "X"
+    else:
+      CPUInput = (random.randint(1, 9) - 1)
+      if not gameState[userInput] == 0:
+        print()
+      else:  
+        gameState[CPUInput] = -1
 
-      if gameFunctions.isThereAWin(gameState):
-        print(gameState)
-        break
+      print("processing move by player X")
+      currentPlayer = "O"
 
-      if gameFunctions.isThereADraw(gameState):
-        print("there is a draw")
-        break
-      else:
-        print("there is not a winner")
+    if gameFunctions.isThereAWin(gameState):
+      gameFunctions.print2DBoard(gameState)
+      break
+
+    if gameFunctions.isThereADraw(gameState):
+      print("there is a draw")
+      break
+    else:
+      print("there is not a winner")
+
+    if currentPlayer == "X":
+      print("It is player X's turn.")
+
+    if currentPlayer == "O":
+      print("It is player O's turn.") 
   
   print("goodbye, game is over")
 
