@@ -18,20 +18,20 @@ global gameState
 def main():
   # main game logic
 
-  print("hello, 2 player game is started...")
+  print("hello, game is started...")
 
   # local constants
 
   # general constants
-  SENTINEL = -1
+  SENTINEL = -2
 
   # local variables
 
   # game variables
   gameInPlay = True
-  prompt = "Enter a value between 0 and 8 (" + str(SENTINEL) + " to quit): "
+  prompt = "Enter a value between 1 and 9 (" + str(SENTINEL + 1) + " to quit): "
   
-  debug = True
+  debug = False
   
   gameState = [
     0, 0, 0, 
@@ -45,9 +45,10 @@ def main():
       print("debugging...")
       gameFunctions.gameStateUI(gameState)
 
-    ioFunctions.boardDisplay(gameState)
+    gameFunctions.print2DBoard(gameState)
+    #ioFunctions.boardDisplay(gameState)
     numTurns += 1
-    userInput = ioFunctions.getIntegerInput(prompt)
+    userInput = (ioFunctions.getIntegerInput(prompt) - 1)
     # user wants to exit     
     if userInput == SENTINEL:
       break
@@ -59,12 +60,14 @@ def main():
       if numTurns % 2 == 1:
         gameState[userInput] = 1
         print("processing move by player O")
+        currentPlayer = "X"
       else:
         gameState[userInput] = -1
         print("processing move by player X")
+        currentPlayer = "O"
 
       if gameFunctions.isThereAWin(gameState):
-        print(gameState)
+        gameFunctions.print2DBoard(gameState)
         break
 
       if gameFunctions.isThereADraw(gameState):
@@ -72,6 +75,12 @@ def main():
         break
       else:
         print("there is not a winner")
+
+      if currentPlayer == "X":
+        print("It is player X's turn.")
+
+      if currentPlayer == "O":
+        print("It is player O's turn.") 
   
   print("goodbye, game is over")
 

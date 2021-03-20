@@ -101,3 +101,15 @@ def isThereADraw(gameState):
 def gameStateUI(gameState):
   print(str(gameState[0:3]) + "\n" + str(gameState[3:6])+ "\n" + str(gameState[6:9]))
   
+def print2DBoard(gameState):
+  boardStateConversion = {
+    -1 : "X",
+    0 : "-",
+    1 : "O"
+  }
+  #boardState = gameState[]
+  print ((boardStateConversion[gameState[0]]) + " | " + (boardStateConversion[gameState[1]]) + " | " + (boardStateConversion[gameState[2]]))
+  print("---------")
+  print ((boardStateConversion[gameState[3]]) + " | " + (boardStateConversion[gameState[4]]) + " | " + (boardStateConversion[gameState[5]]))
+  print("---------")
+  print ((boardStateConversion[gameState[6]]) + " | " + (boardStateConversion[gameState[7]]) + " | " + (boardStateConversion[gameState[8]]))
