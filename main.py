@@ -48,39 +48,53 @@ def main():
     gameFunctions.print2DBoard(gameState)
     #ioFunctions.boardDisplay(gameState)
     numTurns += 1
-    userInput = (ioFunctions.getIntegerInput(prompt) - 1)
-    # user wants to exit     
-    if userInput == SENTINEL:
-      break
-    elif not (userInput > -1 and userInput < 9):
-      print("invalid input " + str(userInput))
-    elif not gameState[userInput] == 0:
-      print("invalid input " + str(userInput) + ". That space is already taken")
+
+    if numTurns % 2 == 1:
+      OTurn = True
+      while OTurn:
+        userInput = (ioFunctions.getIntegerInput(prompt) - 1)
+        if userInput == SENTINEL:
+          break
+        elif not (userInput > -1 and userInput < 9):
+          print("invalid input " + str(userInput))
+        elif not gameState[userInput] == 0:
+          print("invalid input " + str(userInput) + ". That space is already taken")
+        else:
+          gameState[userInput] = 1
+          print("processing move by player O")
+          currentPlayer = "X"
+          break
     else:
-      if numTurns % 2 == 1:
-        gameState[userInput] = 1
-        print("processing move by player O")
-        currentPlayer = "X"
-      else:
-        gameState[userInput] = -1
-        print("processing move by player X")
-        currentPlayer = "O"
+      XTurn = True
+      while XTurn:
+        userInput = (ioFunctions.getIntegerInput(prompt) - 1)
+        if userInput == SENTINEL:
+          break
+        elif not (userInput > -1 and userInput < 9):
+          print("invalid input " + str(userInput))
+        elif not gameState[userInput] == 0:
+          print("invalid input " + str(userInput) + ". That space is already taken")
+        else:
+          gameState[userInput] = -1
+          print("processing move by player X")
+          currentPlayer = "O"
+          break
 
-      if gameFunctions.isThereAWin(gameState):
-        gameFunctions.print2DBoard(gameState)
-        break
+    if gameFunctions.isThereAWin(gameState):
+      gameFunctions.print2DBoard(gameState)
+      break
 
-      if gameFunctions.isThereADraw(gameState):
-        print("there is a draw")
-        break
-      else:
-        print("there is not a winner")
+    if gameFunctions.isThereADraw(gameState):
+      print("there is a draw")
+      break
+    else:
+      print("there is not a winner")
 
-      if currentPlayer == "X":
-        print("It is player X's turn.")
+    if currentPlayer == "X":
+      print("It is player X's turn.")
 
-      if currentPlayer == "O":
-        print("It is player O's turn.") 
+    if currentPlayer == "O":
+      print("It is player O's turn.") 
   
   print("goodbye, game is over")
 
