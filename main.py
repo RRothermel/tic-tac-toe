@@ -13,6 +13,7 @@ import ioFunctions
 ##### global variables
 global gameState
 
+
 ##### functions
 
 def main():
@@ -30,6 +31,7 @@ def main():
   # game variables
   gameInPlay = True
   prompt = "Enter a value between 1 and 9 (" + str(SENTINEL + 1) + " to quit): "
+
   
   debug = False
   
@@ -80,8 +82,16 @@ def main():
           currentPlayer = "O"
           break
 
-    if gameFunctions.isThereAWin(gameState):
-      gameFunctions.print2DBoard(gameState)
+    if gameFunctions.isThereAWin(gameState) and gameFunctions.winner == "O":
+      print(gameFunctions.blue)
+      gameFunctions.printWinningBoard(gameState)
+      print(gameFunctions.white)
+      break
+
+    if gameFunctions.isThereAWin(gameState) == True and gameFunctions.winner == "X":
+      print(gameFunctions.red)
+      gameFunctions.printWinningBoard(gameState)
+      print(gameFunctions.white)
       break
 
     if gameFunctions.isThereADraw(gameState):
